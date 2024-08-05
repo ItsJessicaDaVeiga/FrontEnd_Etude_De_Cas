@@ -3,15 +3,12 @@ import MoviesList from './components/moviesList'
 function App() {
 
   return (
-    <>
-      <div className='bg-pink-400'>
-        <span className=''>Hello, Djob!</span>
+    <div className='bg-amber-50'>
+      <div className=' bg-bubblegum'>
+        <span className='text-3xl font-bold text-cerise '>Hello, Djob!</span>
       </div>
-
-      <div>
-        <MoviesList />
-      </div>
-      </>
+      <MoviesList />
+    </div>
   )
 }
 

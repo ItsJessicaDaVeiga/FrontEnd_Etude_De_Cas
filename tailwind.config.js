@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        cerise: '#BF304A',
+        cerisenoire: '#8c0f26',
+        framboise: '#D96C89',
+        bubblegum: '#F2C2DC',
+      }
+    },
   },
   plugins: [],
 }
