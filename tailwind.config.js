@@ -11,6 +11,7 @@ export default {
         cerisenoire: '#8c0f26',
         framboise: '#D96C89',
         bubblegum: '#F2C2DC',
+        minuit: '#013766',
       }
     },
   },
