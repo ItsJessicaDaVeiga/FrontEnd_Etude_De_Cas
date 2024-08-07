@@ -4,8 +4,11 @@ import MovieCard from './movieCard';
 
 function MoviesList () {
     const [movies, setMovies] = useState([]);
-    const [categories, setCategories] = useState([]);
-    
+    const [categories, setCategories] = useState([]); // Gere les etats des catégories
+    //const [selectedCategories, setSelectedCategories] = useState([]);
+    //const [filteredMovies, setFilteredMovies] = useState([]);
+
+    // Le fetch
     useEffect(() => {
         const fetchMovies = async () => {
             console.log("Attends!")
@@ -17,8 +20,10 @@ function MoviesList () {
         fetchMovies();
     }, []);
 
+
+    // Liste des catégories disponibles
     const getCategories = (movies) => {
-        let availableCategories = ['All'];
+        let availableCategories = [];
         movies.forEach(movie => {
             if(!availableCategories.includes(movie.category)) {
                 availableCategories.push(movie.category);
@@ -28,22 +33,34 @@ function MoviesList () {
         return availableCategories
     };
 
+    /*const handleClick = (event) => {
+        console.log("EVEEEENT",event)
+        setSelectedCategories(event.target.selectedCategories);
+        getFilteredMovies();
+    }
+
+    const getFilteredMovies = () => {
+        //Mon tableau de filterdMovies
+        const newMovies = movies.filter((movie) => selectedCategories.includes(movie.category)) //
+
+        setFilteredMovies(newMovies)
+    }*/
+
+
     return (
         <div>
-
-            <div className="px-10 mx-5 mt-10 p-4 bg-framboise text-cerisenoire font-medium rounded-md">
-                <span>Categories : </span>
-                <span> 
+            <div className="flex flex-wrap m-7 p-4 bg-bubblegum text-cerisenoire rounded-full shadow-md">
+                <div className='flex items-center justify-between w-full'>
                     {categories.map(category => (
-                        <div className="" key={category}>
-                            <input type="checkbox" name={category}/>
-                            <span>{category}</span>
-                        </div>))
+                    <div key={category} className="">
+                        <input type="checkbox" name={category}/> 
+                        <span className="text-xs mx-2 md:text-sm">{category}</span>
+                    </div>))
                     }
-                </span>
+                </div>
             </div>
 
-            <div className= "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className= "grid grid-cols-1 px-5 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {movies.map(movie => (< MovieCard movie={movie} key={movie.id} />))}
             </div>
 

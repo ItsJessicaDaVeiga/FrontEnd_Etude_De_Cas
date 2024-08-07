@@ -60,5 +60,3 @@ Ce projet est un exercice frontend développé avec **React**, utilisant **Tailw
 
 ## Contributions
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
-
-## Documentation
