@@ -4,11 +4,8 @@ import MovieCard from './movieCard';
 
 function MoviesList () {
     const [movies, setMovies] = useState([]);
-    const [categories, setCategories] = useState([]); // Gere les etats des catégories
-    //const [selectedCategories, setSelectedCategories] = useState([]);
-    //const [filteredMovies, setFilteredMovies] = useState([]);
+    const [categories, setCategories] = useState([]); 
 
-    // Le fetch
     useEffect(() => {
         const fetchMovies = async () => {
             console.log("Attends!")
@@ -20,8 +17,6 @@ function MoviesList () {
         fetchMovies();
     }, []);
 
-
-    // Liste des catégories disponibles
     const getCategories = (movies) => {
         let availableCategories = [];
         movies.forEach(movie => {
@@ -33,18 +28,42 @@ function MoviesList () {
         return availableCategories
     };
 
-    /*const handleClick = (event) => {
-        console.log("EVEEEENT",event)
-        setSelectedCategories(event.target.selectedCategories);
-        getFilteredMovies();
+    const handleLike = (id) => {
+        console.log(`Coucou les likes`, id);
+        const newMovies = movies.map((movie) => { 
+            if (movie.id === id) {
+                console.log(`Je suis dans le if de handleLike`)
+                const newMovie = movie;
+                newMovie.likes = newMovie.likes + 1;
+                return newMovie
+            } 
+            return movie
+        }) 
+        console.log(newMovies)
+        setMovies(newMovies)
+        console.log(`LES NOUVEAUX FILMS SONT LAAA`,movies)
     }
 
-    const getFilteredMovies = () => {
-        //Mon tableau de filterdMovies
-        const newMovies = movies.filter((movie) => selectedCategories.includes(movie.category)) //
+    const handleDislike = (id) => {
+        console.log("Coucou les haters", id);
+        const newMovies = movies.map((movie) => {
+            if (movie.id === id) {
+                console.log("Dislike");
+                const newMovie = movie;
+                newMovie.dislikes = newMovie.dislikes + 1;
+                return newMovie
+            }
+            return movie
+        })
+        console.log(newMovies)
+        console.log("Les mal-aimées", movies)
+    }
 
-        setFilteredMovies(newMovies)
-    }*/
+        // GERER LA SUPPRESSION
+        const handleDelete = (id) => {
+            const newMovies = movies.filter((movie) => movie.id !== id);
+            setMovies(newMovies)
+        }
 
 
     return (
@@ -61,11 +80,12 @@ function MoviesList () {
             </div>
 
             <div className= "grid grid-cols-1 px-5 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {movies.map(movie => (< MovieCard movie={movie} key={movie.id} />))}
+                {movies.map(movie => (<MovieCard movie={movie} onLike={handleLike} onDislike={handleDislike} onDelete={handleDelete} key={movie.id} />))}
             </div>
 
         </div>
     )
+    
 }
 
 export default MoviesList
