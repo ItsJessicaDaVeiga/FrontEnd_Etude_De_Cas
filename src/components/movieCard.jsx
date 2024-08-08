@@ -15,6 +15,7 @@ function MovieCard ({movie, onLike, onDislike, onDelete}) {
     const onClickLike = () => {
         setIsLiked(!isLiked);
         onLike(movie.id, isLiked);
+        
         if (isDisliked) {
             onClickDislike();
         }
@@ -23,6 +24,7 @@ function MovieCard ({movie, onLike, onDislike, onDelete}) {
     const onClickDislike = () => {
         setIsDisliked(!isDisliked);
         onDislike(movie.id, isDisliked);
+        
         if (isLiked) {
             onClickLike();
         }

@@ -9,16 +9,6 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 function MoviesList () {
     const [movies, setMovies] = useState([]);
@@ -33,78 +23,74 @@ function MoviesList () {
             const fetchedMovies = await movies$;
             //console.log("C'est bon!")
             setMovies(fetchedMovies);
-            setCategories(getCategories(fetchedMovies));
-            setFilteredMovies(fetchedMovies); // Affiche tous les films au chargement
         };
         fetchMovies();
     }, []);
 
-
-    // GESTION DES CATEGORIES AFFICHEES EN CHECKBOX
-    const getCategories = (movies) => { 
-        let availableCategories = [];
-        movies.forEach(movie => {
-            if(!availableCategories.includes(movie.category)) {
-                availableCategories.push(movie.category);
-            }
-        });
-        //console.log(availableCategories);
-        return availableCategories
-    };
+        // GESTION DES CATEGORIES AFFICHEES EN CHECKBOX
+    useEffect(() => {
+        const getCategories = () => { 
+            let availableCategories = [];
+            filteredMovies.forEach(movie => {
+                if(!availableCategories.includes(movie.category)) {
+                    availableCategories.push(movie.category);
+                }
+            });
+            //console.log(availableCategories);
+            return availableCategories
+        };
+        setCategories(getCategories())
+    }, [filteredMovies])
 
     // GESTION DE LA SELECTION DES FILTRES ET DE L'AFFICHAGE
 
     useEffect(() => {
-        const newfilteredMovies = movies.filter(movie => selectedCategories.includes(movie.category));
+        let newfilteredMovies = []
+        if(selectedCategories.length === 0) {
+            newfilteredMovies = movies
+        } else {
+            newfilteredMovies = movies.filter(movie => selectedCategories.includes(movie.category));
+        }
         setFilteredMovies(newfilteredMovies);
     }, [movies,selectedCategories]); 
 
+
     const handleChangeFilter = (event) => {
-        const value = event.target.value
-        setSelectedCategories(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-          );
+        setSelectedCategories(event.target.value);
     }
 
     //GESTION DES LIKES ET DISLIKES  
     const handleLike = (id, isLiked) => {
         console.log(`Entré dans handleLike`, id);
-        const newMovies = movies.map((movie) => { 
+        const newFilteredMovies = filteredMovies.map((movie) => { 
             if (movie.id === id) {
                 console.log(`HandleLike rencontre un id identique`)
-                const newMovie = movie;
-                newMovie.likes = isLiked ? newMovie.likes - 1 :newMovie.likes + 1
+                const newMovie = movie
+                newMovie.likes = isLiked ? movie.likes - 1 : movie.likes + 1
                 return newMovie
             } 
             return movie
         }) 
-        console.log(newMovies)
-        setMovies(newMovies)
-        console.log(`newMovie après handleLike:`,movies)
+        setFilteredMovies(newFilteredMovies);
     }
 
     const handleDislike = (id, isDisliked) => {
-        console.log(`Coucou les haters`, id);
-        const newMovies = movies.map((movie) => {
+        const newFilteredMovie = filteredMovies.map((movie) => {
             if (movie.id === id) {
-                console.log(`HandleDislike rencontre un id identique`);
-                const newMovie = movie;
-                newMovie.dislikes = isDisliked ? newMovie.dislikes - 1 : newMovie.dislikes + 1
+                const newMovie = movie
+                newMovie.dislikes = isDisliked ? movie.dislikes - 1 : movie.dislikes + 1
                 return newMovie
             }
             return movie
-        })
-        console.log(newMovies)
+        });
+        setFilteredMovies(newFilteredMovie);
     }
 
     // GESTION DE LA SUPPRESSION 
     const handleDelete = (id) => {
-        const newMovies = movies.filter((movie) => movie.id !== id);
-        setMovies(newMovies)
+        const newMovies = filteredMovies.filter((movie) => movie.id !== id);
+        setFilteredMovies(newMovies)
     }
-
-   
 
     return (
         <div> 
@@ -117,7 +103,6 @@ function MoviesList () {
                 value={selectedCategories}
                 onChange={handleChangeFilter}
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                MenuProps={MenuProps}
                 renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                       {selected.map((value) => (
@@ -126,6 +111,9 @@ function MoviesList () {
                     </Box>
                   )}
             >
+                <MenuItem disabled value="">
+                    <span>Categories</span>
+                </MenuItem>
                 {categories.map((category) => (
                     <MenuItem
                         key={category}
