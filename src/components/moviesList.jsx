@@ -8,9 +8,9 @@ function MoviesList () {
 
     useEffect(() => {
         const fetchMovies = async () => {
-            console.log("Attends!")
+            //console.log("Attends!")
             const fetchedMovies = await movies$;
-            console.log("C'est bon!")
+            //console.log("C'est bon!")
             setMovies(fetchedMovies);
             setCategories(getCategories(fetchedMovies));
         };
@@ -24,17 +24,17 @@ function MoviesList () {
                 availableCategories.push(movie.category);
             }
         });
-        console.log(availableCategories);
+        //console.log(availableCategories);
         return availableCategories
     };
 
-    const handleLike = (id) => {
-        console.log(`Coucou les likes`, id);
+    const handleLike = (id, isLiked) => {
+        console.log(`Entré dans handleLike`, id);
         const newMovies = movies.map((movie) => { 
             if (movie.id === id) {
-                console.log(`Je suis dans le if de handleLike`)
+                console.log(`Rencontre un id identique`)
                 const newMovie = movie;
-                newMovie.likes = newMovie.likes + 1;
+                newMovie.likes = isLiked ? newMovie.likes - 1 :newMovie.likes + 1
                 return newMovie
             } 
             return movie
@@ -44,19 +44,19 @@ function MoviesList () {
         console.log(`LES NOUVEAUX FILMS SONT LAAA`,movies)
     }
 
-    const handleDislike = (id) => {
-        console.log("Coucou les haters", id);
+    const handleDislike = (id, isDisliked) => {
+        //console.log("Coucou les haters", id);
         const newMovies = movies.map((movie) => {
             if (movie.id === id) {
-                console.log("Dislike");
+                //console.log("Dislike");
                 const newMovie = movie;
-                newMovie.dislikes = newMovie.dislikes + 1;
+                newMovie.dislikes = isDisliked ? newMovie.dislikes - 1 : newMovie.dislikes + 1
                 return newMovie
             }
             return movie
         })
         console.log(newMovies)
-        console.log("Les mal-aimées", movies)
+        //console.log("Les mal-aimées", movies)
     }
 
         // GERER LA SUPPRESSION
