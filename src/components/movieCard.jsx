@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
-import EmptyHeartIcon from "../icons/4.png";
-import EmptyDislikeIcon from "../icons/6.png";
 import { useState } from "react";
-import FilledHeartIcon from "../icons/3.png";
-import FilledDislikeIcon from "../icons/7.png";
+import FilledHeartIcon from "../icons/filledheart.png";
+import FilledDislikeIcon from "../icons/filleddislike.png";
+import EmptyHeartIcon from "../icons/emptyheart.png";
+import EmptyDislikeIcon from "../icons/emptydislike.png";
+import Poubelle from "../icons/poubelle.png";
 
 
 
@@ -14,7 +15,7 @@ function MovieCard ({movie, onLike, onDislike, onDelete}) {
 
     const onClickLike = () => {
         setIsLiked(!isLiked);
-        onLike(movie.id, isLiked);
+        onLike(movie.id, !isLiked);
         
         if (isDisliked) {
             onClickDislike();
@@ -23,7 +24,7 @@ function MovieCard ({movie, onLike, onDislike, onDelete}) {
 
     const onClickDislike = () => {
         setIsDisliked(!isDisliked);
-        onDislike(movie.id, isDisliked);
+        onDislike(movie.id, !isDisliked);
         
         if (isLiked) {
             onClickLike();
@@ -34,28 +35,41 @@ function MovieCard ({movie, onLike, onDislike, onDelete}) {
         onDelete(movie.id)
     }
 
-
     return (
-        <div className="flex flex-col p-10 pb-5 gap-y-2 bg-cerise text-white rounded-lg shadow-lg">
+        <div className="flex flex-col p-2 gap-y-2 bg-white text-dark rounded-lg hover:shadow-xl shadow-md">
 
-            <span className="uppercase font-extrabold text-2xl whitespace-nowrap">{movie.title}</span>
-            <span>{movie.category}</span>
-            <span> {movie.likes} likes</span>
-            <span> {movie.dislikes} dislikes</span>
+            <span className="px-3 py-4 uppercase font-extrabold text-2xl whitespace-nowrap border-b border-lavande">{movie.title}</span>
 
-            <div className="grid grid-cols-2 gap-x-4">
-                <button 
-                className="p-2 bg-framboise  rounded-md hover:bg-bubblegum hover:text-cerise hover:font-semibold shadow-md duration-300" onClick={onClickLike}>
-                    <span className="flex items-center justify-center"> <img className="h-14" src={ isLiked ? FilledHeartIcon : EmptyHeartIcon} alt="Like Icon"/></span>
-                </button>
-           
-                <button className="p-2 bg-framboise rounded-md  hover:bg-bubblegum hover:text-cerise hover:font-semibold  shadow-md duration-300" onClick={onClickDislike}>
-                    <span className="flex items-center justify-center"><img className="h-14" src={isDisliked ? FilledDislikeIcon : EmptyDislikeIcon} alt="Dislike Icon"/></span>
-                </button>
+            <div className="p-2 pt-0">
+
+                <div className="flex flex-col pl-2 py-4">
+                    <span>{movie.category}</span>
+                    <span> <strong>{movie.likes}</strong> likes</span>
+                    <span> <strong>{movie.dislikes}</strong> dislikes</span>
+                </div>
             </div>
 
-            <button className="pt-5 font-medium text-cerisenoire hover:text-bubblegum duration-300" onClick={onClickDelete}>Supprimer</button>
-
+            <div className="grid grid-cols-3 ">
+                <button 
+                    className="p-1.5 rounded-l-md bg-lavande hover:bg-amber-50 duration-300" 
+                    onClick={onClickLike}
+                >
+                    <span className="flex items-center justify-center "> <img className="h-10" src={isLiked ? FilledHeartIcon : EmptyHeartIcon} alt="Like Icon"/></span>
+                </button>
+           
+                <button 
+                    className="p-1.5 bg-lightlavande rounded-r-md hover:bg-amber-100 duration-300" 
+                    onClick={onClickDislike}
+                >
+                    <span className="flex items-center justify-center"><img className="h-10" src={isDisliked ? FilledDislikeIcon : EmptyDislikeIcon} alt="Dislike Icon"/></span>
+                </button>
+                <button 
+                    className="ml-2 p-1.5 bg-graay rounded-md hover:bg-amber-100 duration-300" 
+                    onClick={onClickDelete}
+                >
+                    <span className="flex items-center justify-center"><img className="h-10" src={Poubelle} alt="Dislike Icon"/></span>
+                </button>
+            </div>
         </div>
     )
 }

@@ -19,15 +19,13 @@ function MoviesList () {
 
     useEffect(() => {
         const fetchMovies = async () => {
-            //console.log("Attends!")
             const fetchedMovies = await movies$;
-            //console.log("C'est bon!")
             setMovies(fetchedMovies);
         };
         fetchMovies();
     }, []);
 
-        // GESTION DES CATEGORIES AFFICHEES EN CHECKBOX
+    //GESTION DES CATEGORIES DISPONIBLE DANS LES FILTRES
     useEffect(() => {
         const getCategories = () => { 
             let availableCategories = [];
@@ -36,14 +34,12 @@ function MoviesList () {
                     availableCategories.push(movie.category);
                 }
             });
-            //console.log(availableCategories);
             return availableCategories
         };
         setCategories(getCategories())
     }, [filteredMovies])
 
-    // GESTION DE LA SELECTION DES FILTRES ET DE L'AFFICHAGE
-
+    //GESTION DE LA SELECTION DES FILTRES ET DE L'AFFICHAGE
     useEffect(() => {
         let newfilteredMovies = []
         if(selectedCategories.length === 0) {
@@ -59,14 +55,14 @@ function MoviesList () {
         setSelectedCategories(event.target.value);
     }
 
-    //GESTION DES LIKES ET DISLIKES  
+    //GESTION DES LIKES ET DES DISLIKES  
     const handleLike = (id, isLiked) => {
         console.log(`Entré dans handleLike`, id);
         const newFilteredMovies = filteredMovies.map((movie) => { 
             if (movie.id === id) {
                 console.log(`HandleLike rencontre un id identique`)
                 const newMovie = movie
-                newMovie.likes = isLiked ? movie.likes - 1 : movie.likes + 1
+                newMovie.likes = isLiked ? movie.likes + 1 : movie.likes - 1
                 return newMovie
             } 
             return movie
@@ -78,7 +74,7 @@ function MoviesList () {
         const newFilteredMovie = filteredMovies.map((movie) => {
             if (movie.id === id) {
                 const newMovie = movie
-                newMovie.dislikes = isDisliked ? movie.dislikes - 1 : movie.dislikes + 1
+                newMovie.dislikes = isDisliked ? movie.dislikes + 1 : movie.dislikes - 1
                 return newMovie
             }
             return movie
@@ -86,7 +82,7 @@ function MoviesList () {
         setFilteredMovies(newFilteredMovie);
     }
 
-    // GESTION DE LA SUPPRESSION 
+    //GESTION DE LA SUPPRESSION 
     const handleDelete = (id) => {
         const newMovies = filteredMovies.filter((movie) => movie.id !== id);
         setFilteredMovies(newMovies)
@@ -94,37 +90,39 @@ function MoviesList () {
 
     return (
         <div> 
-            <FormControl className="w-64">
-            <InputLabel id="multiple-select-label">Categories</InputLabel>
-            <Select
-                labelId="multiple-select-label"
-                id="multiple-select"
-                multiple
-                value={selectedCategories}
-                onChange={handleChangeFilter}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
-                  )}
-            >
-                <MenuItem disabled value="">
-                    <span>Categories</span>
-                </MenuItem>
-                {categories.map((category) => (
-                    <MenuItem
-                        key={category}
-                        value={category}
+            <div className="flex items-center px-5 py-8">
+                <FormControl className="w-1/2">
+                    <InputLabel id="multiple-select-label">Categories</InputLabel>
+                    <Select
+                        labelId="multiple-select-label"
+                        id="multiple-select"
+                        multiple
+                        value={selectedCategories}
+                        onChange={handleChangeFilter}
+                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                        renderValue={(selected) => (
+                            <Box>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value} />
+                            ))}
+                            </Box>
+                        )}
                     >
-                        {category}
-                    </MenuItem>
-                ))}
-                
-            </Select>
-            </FormControl>
+                        <MenuItem disabled value="">
+                            <span>Categories</span>
+                        </MenuItem>
+                        {categories.map((category) => (
+                            <MenuItem
+                                key={category}
+                                value={category}
+                            >
+                                {category}
+                            </MenuItem>
+                        ))}
+                        
+                    </Select>
+                </FormControl>
+            </div>
             <div className= "grid grid-cols-1 px-5 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {filteredMovies.map(movie => (<MovieCard movie={movie} onLike={handleLike} onDislike={handleDislike} onDelete={handleDelete} key={movie.id} />))}
             </div>

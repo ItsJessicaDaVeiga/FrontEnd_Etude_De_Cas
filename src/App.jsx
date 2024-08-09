@@ -3,9 +3,9 @@ import MoviesList from './components/moviesList';
 function App() {
 
   return (
-    <div className='bg-amber-50'>
-      <div className=' bg-bubblegum'>
-        <span className='text-5xl font-bold text-cerise'>Hello, Djob!</span>
+    <div className='h-full bg-amber-50 pb-10'>
+      <div className='p-6 border-b-2 border-lavande'>
+        <span className='text-5xl font-bold text-darklavende'>Hello, Djob!</span>
       </div>
       <MoviesList />
     </div>
