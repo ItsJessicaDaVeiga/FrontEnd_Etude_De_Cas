@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { movies$ } from "../api/movies"
+import { movies$ } from "../data/movies";
 import MovieCard from './movieCard';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -15,7 +15,6 @@ function MoviesList () {
     const [categories, setCategories] = useState([]); 
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [filteredMovies, setFilteredMovies]= useState([]);
-
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -39,6 +38,7 @@ function MoviesList () {
         setCategories(getCategories())
     }, [filteredMovies])
 
+
     //GESTION DE LA SELECTION DES FILTRES ET DE L'AFFICHAGE
     useEffect(() => {
         let newfilteredMovies = []
@@ -49,13 +49,11 @@ function MoviesList () {
         }
         setFilteredMovies(newfilteredMovies);
     }, [movies,selectedCategories]); 
-
-
     const handleChangeFilter = (event) => {
         setSelectedCategories(event.target.value);
     }
 
-    //GESTION DES LIKES ET DES DISLIKES  
+    //GESTION DES LIKES
     const handleLike = (id, isLiked) => {
         const newFilteredMovies = filteredMovies.map((movie) => { 
             if (movie.id === id) {
@@ -68,6 +66,7 @@ function MoviesList () {
         setFilteredMovies(newFilteredMovies);
     }
 
+    //GESTION DES DISLIKES
     const handleDislike = (id, isDisliked) => {
         const newFilteredMovie = filteredMovies.map((movie) => {
             if (movie.id === id) {
@@ -90,7 +89,7 @@ function MoviesList () {
         <div> 
             <div className="flex items-center px-5 py-8">
                 <FormControl className="w-1/2">
-                    <InputLabel id="multiple-select-label">Categories</InputLabel>
+                    <InputLabel id="multiple-select-label">Filter</InputLabel>
                     <Select
                         labelId="multiple-select-label"
                         id="multiple-select"
@@ -129,4 +128,5 @@ function MoviesList () {
     )
     
 }
+
 export default MoviesList

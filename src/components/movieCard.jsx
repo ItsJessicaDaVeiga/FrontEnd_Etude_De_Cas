@@ -6,8 +6,6 @@ import EmptyHeartIcon from "../icons/emptyheart.png";
 import EmptyDislikeIcon from "../icons/emptydislike.png";
 import Poubelle from "../icons/poubelle.png";
 
-
-
 function MovieCard ({movie, onLike, onDislike, onDelete}) {
     const [isLiked, setIsLiked] = useState(false);
     const [isDisliked, setIsDisliked] = useState(false);
@@ -41,7 +39,6 @@ function MovieCard ({movie, onLike, onDislike, onDelete}) {
             <span className="px-3 py-4 uppercase font-extrabold text-2xl whitespace-nowrap border-b border-lavande">{movie.title}</span>
 
             <div className="p-2 pt-0">
-
                 <div className="flex flex-col pl-2 py-4">
                     <span>{movie.category}</span>
                     <span> <strong>{movie.likes}</strong> likes</span>
