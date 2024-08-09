@@ -1,12 +1,13 @@
 # Listing de vidéos
 
-Ce projet est un exercice frontend développé avec **React**, utilisant **TailwindCSS** et **Material UI** pour le style, **PropTypes** pour la validation des props.
+Ce projet est un exercice frontend développé avec **React**, utilisant **TailwindCSS** et **Material UI** pour le style, **Canva** pour les icones **PropTypes** pour la validation des props.
 
 ## Technologies utilisées et documentations
 
 - **React** : https://react.dev/reference/react/hooks
 - **TailwindCSS** : https://tailwindcss.com/docs/installation
 - **Material UI** : https://mui.com/material-ui/getting-started/
+- **Canvas** : https://www.canva.com/
 - **PropTypes** : https://fr.legacy.reactjs.org/docs/typechecking-with-proptypes.html
 - **Phind** : https://www.phind.com/search?home=true
 - **Perplexity** : https://www.perplexity.ai/
@@ -69,4 +70,4 @@ Ce projet est un exercice frontend développé avec **React**, utilisant **Tailw
 5. Cliquez sur le lien localhost qui s'affiche dans le terminal.
 
 ## Contributions
-Les contributions sont les bienvenues! N'hésitez pas à ouvrir une issue ou à soumettre une pull request. Elles ne seront validé qu'à la fin du mois car il s'agit d'un exercice 
+Les contributions sont les bienvenues! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
