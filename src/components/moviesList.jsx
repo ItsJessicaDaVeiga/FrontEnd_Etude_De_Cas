@@ -57,10 +57,8 @@ function MoviesList () {
 
     //GESTION DES LIKES ET DES DISLIKES  
     const handleLike = (id, isLiked) => {
-        console.log(`Entré dans handleLike`, id);
         const newFilteredMovies = filteredMovies.map((movie) => { 
             if (movie.id === id) {
-                console.log(`HandleLike rencontre un id identique`)
                 const newMovie = movie
                 newMovie.likes = isLiked ? movie.likes + 1 : movie.likes - 1
                 return newMovie
